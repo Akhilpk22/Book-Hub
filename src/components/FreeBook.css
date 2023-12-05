@@ -1,0 +1,9 @@
+.freebook{
+    transition: transform 0.8s; /* Add a smooth transition effect */
+            cursor: pointer; 
+}
+.freebook:hover{
+    transform: scale(1.2);
+    color: rgb(217, 37, 37);
+
+}

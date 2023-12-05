@@ -1,0 +1,69 @@
+.navitem {
+
+   display: inline-block;
+   /* Ensures the element only takes up as much width as necessary */
+   transition: transform 0.2s ease-in-out;
+   width: 200px;
+
+}
+
+.navitem:hover {
+   color: brown;
+   transform: translateX(50px) scale(1.2);
+   background-color: transparent;
+   /* Set to 'transparent' or 'initial' to remove background color */
+
+}
+
+ul {
+   margin: 0px;
+   padding: 0px;
+   display: flex;
+}
+
+ul li {
+   font-size: 40px;
+   letter-spacing: 10px;
+   color: black;
+   font-weight: bolder;
+   list-style: none;
+   transition: 2s;
+}
+
+ul:hover li {
+   transform: rotate(90deg) translateY(-200px);
+   opacity: 0px;
+   filter: blur(90px);
+}
+
+ul li:nth-child(1) {
+   transition-delay: 0;
+}
+
+ul li:nth-child(2) {
+   transition-delay: 0.1s;
+}
+
+ul li:nth-child(3) {
+   transition-delay: 0.2;
+}
+
+ul li:nth-child(4) {
+   transition-delay: 0.3s;
+}
+
+ul li:nth-child(5) {
+   transition-delay: 0.4s;
+}
+
+ul li:nth-child(6) {
+   transition-delay: 0.5s;
+}
+
+ul li:nth-child(7) {
+   transition-delay: 0.6s;
+}
+
+ul li:nth-child(8){
+   transition-delay: 0.7s;
+  }
