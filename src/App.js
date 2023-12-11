@@ -18,11 +18,12 @@ function App() {
     <div >
       
       <Routes>
+        {/* initialy  we have login and to click login and  register */}
         <Route path='/' element={<Auth />}/>
+        <Route path='/register' element={<Auth register/>}/>
         <Route path='/Home' element={<Home/>}/>
         <Route path='/bookselling' element={<SellingBox />}/>
         <Route path='/bookview' element={<BookView/>}/>
-       
         <Route path='/freebooks' element={<FreeBooks/>}/>
         <Route path='/userbook'element={<OnlyUserBook/>}/>
       </Routes>
