@@ -40,27 +40,7 @@ function Home() {
                     Our curated recommendations and personalized reading lists
                     will guide you towards your next literary adventure...
                   </p>
-                  <div style={{ position: "relative" }}>
-                    <input
-                      type="text"
-                      className="form-control"
-                      placeholder="Search Books"
-                      aria-label="Search Books"
-                      aria-describedby="basic-addon2"
-                    />
-                    <i
-                      className="fa fa-search"
-                      style={{
-                        position: "absolute",
-                        top: "50%",
-                        right: "10px",
-                        transform: "translateY(-50%)",
-                        fontSize: "20px",
-                        color: "#666",
-                        cursor: "pointer",
-                      }}
-                    ></i>
-                  </div>
+                  
                 </div>
               </div>
             </Col>

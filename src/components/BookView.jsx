@@ -8,6 +8,7 @@ import { Container } from "react-bootstrap";
 import Offcanvas from "react-bootstrap/Offcanvas";
 import { useState } from "react";
 import { homeBookAPI } from "../Services/allAPI";
+import { BASE_URL } from "../Services/baseurl";
 
 function BookView() {
   
@@ -57,10 +58,10 @@ console.log(allBooks);
               <Card>
                 <Card.Img
                   onClick={()=>handleCardClick(book)}
-                  style={{ height: "250px" }}
+                  style={{ height: "350px" }}
                   className="img-fluid w-100"
                   variant="top"
-                  src={book?book.bookImage:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"}
+                  src={book?`${BASE_URL}/uploads/${book?.bookImage}`:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"}
                 />
                  <p className="text-center fw-bolder ">{book.bookTitle}</p>
               </Card>
@@ -82,22 +83,22 @@ console.log(allBooks);
             <Card>
               <Card.Img
                 onClick={handleShow}
-                style={{ height: "250px" }}
+                style={{ height: "440px" }}
                 className="img-fluid w-100"
                 variant="top"
-                src={selectedBook?selectedBook.bookImage:"https://encrypted-tbn0.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"}
+                src={selectedBook?`${BASE_URL}/uploads/${selectedBook?.bookImage}`:"https://encrypted-tbn0.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"}
               />
              
             </Card>
-            <h4  className="mt-4">Book Title: <span >{selectedBook?.bookTitle}</span ></h4>
-            <h4 className="">Author Name: {selectedBook?.autorName}</h4>
-            <h4>Book Category: {selectedBook?.bookCategory}</h4>
-            <h4>
+            <h4  className="mt-4 text-info">Book Title: <span className="text-success " >{selectedBook?.bookTitle}</span ></h4>
+            <h4 className="text-info">Author Name:<span className="text-success"> {selectedBook?.autorName}</span></h4>
+            <h4 className="text-info">Book Category:<span  className="text-success"> {selectedBook?.bookCategory}</span></h4>
+            <h4 className="text-info">
               Book Description:
-              <span className="clamp-lines">{selectedBook?.bookDescription}</span>
+              <span className="clamp-lines "><span  className="text-success">{selectedBook?.bookDescription}</span></span>
             </h4>
             <h4 className="mt-1">
-            <a  href={selectedBook?.bookLink} target='_blank' className="me-3 btn "><p className="fw-bolder me-5">more details click here</p></a>
+            <a  href={selectedBook?.bookLink} target='_blank' className="me-3 btn border-0 "><p className="fw-bolder me-5 border-0 more">more details click here</p></a>
 
             </h4>
           </Offcanvas.Body>

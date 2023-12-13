@@ -6,7 +6,7 @@ import './Footer.css';
 function Footer() {
   return (
     <>
-        <div style={{width:'100%',height:'530px',backgroundColor:("black"),filter: 'brightness(0.6)'}} className='d-flex flex-column justify-content-center align-items-center text-white  rounded-top  '>
+        <div style={{width:'100%',height:'500px',backgroundColor:("black"),filter: 'brightness(0.6)'}} className='d-flex flex-column justify-content-center align-items-center text-white  rounded-top  '>
         <div className=" border-0 footer-div d-flex justify-content-evenly  w-100 flex-wrap border border-white  ">
           <div className="website" style={{width:'400px'}}>
             <h4 style={{color:'white'}}>{' '}

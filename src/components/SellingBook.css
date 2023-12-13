@@ -1,8 +1,8 @@
 .sellingboxhover{
-    transition: transform 0.8s; /* Add a smooth transition effect */
+    transition: transform 0.2s; /* Add a smooth transition effect */
             cursor: pointer; 
 }
 .sellingboxhover:hover {
-    transform: scale(1.3);
-    color: rgb(217, 37, 37); /* Increase the size on hover (zoom effect) */
+    transform: scale(1.1);
+    color: rgb(217, 163, 87); /* Increase the size on hover (zoom effect) */
 }

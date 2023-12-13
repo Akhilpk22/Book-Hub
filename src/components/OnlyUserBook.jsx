@@ -1,37 +1,100 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Card, Col, Container, Offcanvas, Row } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import Fade from "react-bootstrap/Fade";
-import Form from "react-bootstrap/Form";
-import Modal from "react-bootstrap/Modal";
+import { deleteAPI, userBookAPI } from "../Services/allAPI";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { BASE_URL } from "../Services/baseurl";
+import {
+  bookDateResponseContext,
+  editBookResponseContext,
+} from "../Context/ContextShare";
+import { Alert } from "react-bootstrap";
+import EditBooks from "./EditBooks";
 
 function OnlyUserBook() {
+  // another  one context call
+  const { editBookResponse, seteditBookResponse } = useContext(
+    editBookResponseContext
+  );
+
+  // context call
+  const { bookdateResponse, setBookdateResponse } = useContext(
+    bookDateResponseContext
+  );
+
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
-  const [editModalShow, setEditModalShow] = useState(false);
-
   const [open, setOpen] = useState(false);
 
-  const handleEditModalShow = () => setEditModalShow(true);
-  const handleEditModalClose = () => setEditModalShow(false);
-  
   //  to lo hold the user name we want to state create
-  const [ username,setUsername]= useState("")
+  const [username, setUsername] = useState("");
 
-  // to load the name of the user 
-  useEffect(()=>{
-    if(sessionStorage.getItem("existingUser")){
-      setUsername(JSON.parse(sessionStorage.getItem("existingUser")).username)
+  // to load the name of the user
+  useEffect(() => {
+    if (sessionStorage.getItem("existingUser")) {
+      setUsername(JSON.parse(sessionStorage.getItem("existingUser")).username);
     }
-  },[])
+  }, []);
+
+  // there is a state that value will be store in old map argument is book
+  const [selectedBooks, setSelectedBooks] = useState(null);
+
+  // user book hold  state
+  const [userBooks, setuserBooks] = useState([]);
+
+  const getUserBooks = async () => {
+    if (sessionStorage.getItem("token")) {
+      const token = sessionStorage.getItem("token");
+      const reqHeader = {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      };
+      const result = await userBookAPI(reqHeader);
+      if (result.status === 200) {
+        setuserBooks(result.data);
+      } else {
+        toast.warning(result.response.data);
+      }
+    }
+  };
+
+  // open function will be call in the handlecardlick this argumenet book is passed
+  const handleCardClick = (book) => {
+    setSelectedBooks(book);
+    handleShow();
+  };
+
+  // handledelete function define
+
+  const handledelete = async (id) => {
+    const token = sessionStorage.getItem("token");
+    const reqHeader = {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${token}`,
+    }
+    const result= await deleteAPI(id,reqHeader)
+    if(result.status===200){
+      // page reload mongo bd call 
+      getUserBooks();
+    }else{
+      toast.error(result.response.data)
+    }
+  };
+
+  useEffect(() => {
+    getUserBooks();
+    // use context state
+  }, [bookdateResponse, editBookResponse]);
+  console.log(userBooks);
 
   return (
     <>
-      <div className="d-flex justify-content-center align-items-center mt-5">
+      <div className="d-flex justify-content-center align-items-center ">
         <h2> user Books </h2>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
@@ -57,84 +120,50 @@ function OnlyUserBook() {
           <p className="text-center fw-bolder shadow-lg mt-3">{username} </p>
           <div className="d-flex justify-content-around  align-items-center ">
             <p>follow up</p>
-            <p>like</p>
+            <p>like 1222</p>
           </div>
         </div>
         <div style={{ flex: "1", padding: "20px" }}>
+          {/* XX to add massage  */}
+          {bookdateResponse.bookTitle ? (
+            <Alert className="bg-success" dismissible>
+              <span className="fw-bolder  text-danger">
+                {bookdateResponse.bookTitle}
+              </span>
+              Added successfuly!!!...
+            </Alert>
+          ) : null}
           <Container>
             <Row className="mt-2">
-              <Col className="mt-3" sm={12} md={6}>
-                {/* Adjust column sizes based on your design */}
-                <Card>
-                  <Card.Img
-                    onClick={handleShow}
-                    style={{ height: "250px" }}
-                    className="img-fluid w-100"
-                    variant="top"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
-                  />
-                  <p
-                    style={{ fontSize: "20px" }}
-                    className="text-center fw-bolder "
-                  >
-                    title
-                  </p>
-                </Card>
-              </Col>
-              <Col className="mt-3" sm={12} md={6}>
-                {/* Adjust column sizes based on your design */}
-                <Card>
-                  <Card.Img
-                    onClick={handleShow}
-                    style={{ height: "250px" }}
-                    className="img-fluid w-100"
-                    variant="top"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
-                  />
-                  <p
-                    style={{ fontSize: "20px" }}
-                    className="text-center fw-bolder "
-                  >
-                    title
-                  </p>
-                </Card>
-              </Col>
-              <Col className="mt-3" sm={12} md={6}>
-                {/* Adjust column sizes based on your design */}
-                <Card>
-                  <Card.Img
-                    onClick={handleShow}
-                    style={{ height: "250px" }}
-                    className="img-fluid w-100"
-                    variant="top"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
-                  />
-                  <p
-                    style={{ fontSize: "20px" }}
-                    className="text-center fw-bolder "
-                  >
-                    title
-                  </p>
-                </Card>
-              </Col>
-              <Col className="mt-3" sm={12} md={6}>
-                {/* Adjust column sizes based on your design */}
-                <Card>
-                  <Card.Img
-                    onClick={handleShow}
-                    style={{ height: "250px" }}
-                    className="img-fluid w-100"
-                    variant="top"
-                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
-                  />
-                  <p
-                    style={{ fontSize: "20px" }}
-                    className="text-center fw-bolder "
-                  >
-                    title
-                  </p>
-                </Card>
-              </Col>
+              {userBooks?.length > 0 ? (
+                userBooks.map((book) => (
+                  <Col className="mt-3" sm={12} md={6}>
+                    <Card>
+                      <Card.Img
+                        onClick={() => handleCardClick(book)}
+                        style={{ height: "350px" }}
+                        className="img-fluid w-100 border-3"
+                        variant="top"
+                        src={
+                          book
+                            ? `${BASE_URL}/uploads/${book?.bookImage}`
+                            : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
+                        }
+                      />
+                      <p
+                        style={{ fontSize: "20px" }}
+                        className="text-center fw-bolder "
+                      >
+                        {book.bookTitle}
+                      </p>
+                    </Card>
+                  </Col>
+                ))
+              ) : (
+                <h1 className=" ms-5 fw-bolder text-danger">
+                  No projects add.....
+                </h1>
+              )}
             </Row>
           </Container>
           <Offcanvas
@@ -144,7 +173,15 @@ function OnlyUserBook() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>Welcome User</Offcanvas.Title>
+              <Offcanvas.Title>
+                <span className="text-black">Welcome</span>{" "}
+                <span
+                  style={{ fontSize: "25px", textTransform: "uppercase" }}
+                  className="text-success fw-bolder "
+                >
+                  {username}
+                </span>
+              </Offcanvas.Title>
             </Offcanvas.Header>
             <div className="d-flex justify-content-between align-items-center  m-1 ">
               <div></div>
@@ -159,20 +196,20 @@ function OnlyUserBook() {
               <div className="d-flex justify-content-end align-items-center me-5">
                 <Fade in={open}>
                   <div className="d-flex justify-content-start align-items-center m-2 mt-4">
+                    <EditBooks selectedBooks={selectedBooks} />
                     <button
-                      className="btn btn-info me-3"
-                      onClick={handleEditModalShow}
+                      onClick={() => handledelete(selectedBooks._id)}
+                      className="btn btn-danger"
                     >
-                      edit
+                      delete
                     </button>
-                    <button className="btn btn-danger">delete</button>
                   </div>
                 </Fade>
               </div>
             ) : null}
 
             {/* Edit Modal */}
-            <Modal
+            {/* <Modal
               show={editModalShow}
               onHide={handleEditModalClose}
               className="custom-modal"
@@ -254,36 +291,69 @@ function OnlyUserBook() {
                   Save Changes
                 </Button>
               </Modal.Footer>
-            </Modal>
+            </Modal> */}
 
             <Offcanvas.Body>
               <Card>
                 <Card.Img
                   onClick={handleShow}
-                  style={{ height: "250px" }}
+                  style={{ height: "390px" }}
                   className="img-fluid w-100"
                   variant="top"
-                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
+                  src={
+                    selectedBooks
+                      ? `${BASE_URL}/uploads/${selectedBooks?.bookImage}`
+                      : "https://encrypted-tbn0.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"
+                  }
                 />
               </Card>
-              <h4 className="mt-4">Author Name:</h4>
-              <h4>Book Category:</h4>
-              <h4>
-                Book Description:
-                <span className="clamp-lines">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Doloribus tempora asperiores labore accusamus porro laborum
-                  dolorum illo assumenda sint accusantium, iusto hic rerum minus
-                  nam fugit provident, dolor culpa adipisci.
+              <h4 className="mt-4 text-info">
+                Book Title:{" "}
+                <span className="text-success ">
+                  {selectedBooks?.bookTitle}
                 </span>
               </h4>
-              <h4>
-                Link to
-                Book:"https://www.freepik.com/free-photos-vectors/pdf-book"
+              <h4 className="text-info">
+                Author Name:
+                <span className="text-success">
+                  {" "}
+                  {selectedBooks?.autorName}
+                </span>
+              </h4>
+              <h4 className="text-info">
+                Book Category:
+                <span className="text-success">
+                  {" "}
+                  {selectedBooks?.bookCategory}
+                </span>
+              </h4>
+              <h4 className="text-info">
+                Book Description:
+                <span className="clamp-lines ">
+                  <span className="text-success">
+                    {selectedBooks?.bookDescription}
+                  </span>
+                </span>
+              </h4>
+              <h4 className="mt-1">
+                <a
+                  href={selectedBooks?.bookLink}
+                  target="_blank"
+                  className="me-3 btn border-0 "
+                >
+                  <p className="fw-bolder me-5 border-0 more">
+                    more details click here
+                  </p>
+                </a>
               </h4>
             </Offcanvas.Body>
           </Offcanvas>
         </div>
+        <ToastContainer
+          position="top-center"
+          autoClose={2000}
+          theme="colored"
+        />
       </div>
     </>
   );

@@ -1,0 +1,12 @@
+.more {
+    width: 200px;
+    padding: 3px;
+    color: #333; /* Regular text color */
+    background-color: #fff; /* Regular background color */
+  }
+  
+  .more:hover {
+    border-radius: 30px;
+    color: #fa0c0c; /* Text color on hover */
+    background-color: #454a4f; /* Background color on hover */
+  }

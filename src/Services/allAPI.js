@@ -20,3 +20,19 @@ export const addBooksAPI = async(reqBody,reqHeader)=>{
 export const homeBookAPI= async()=>{
     return await commonAPI("GET",`${BASE_URL}/books/all`,"","")
 }
+// user books 
+export const userBookAPI = async(reqHeader)=>{
+    return await commonAPI("GET",`${BASE_URL}/user/all-books`,"",reqHeader)
+    
+}
+
+// update api call 
+export const editbookAPI  = async(bookId ,reqBody,reqHeader)=>{
+    // passss the url path parametter id  
+    return await commonAPI("PUT",`${BASE_URL}/books/edit/${bookId}`,reqBody,reqHeader)
+}
+
+// delete API call in onlyuserbook
+export const deleteAPI = async(bookId,reqHeader)=>{
+    return await commonAPI("DELETE",`${BASE_URL}/books/remove/${bookId}`,{},reqHeader)
+}

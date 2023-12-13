@@ -1,14 +1,19 @@
-import React, { useEffect } from "react";
+import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import "./UploadBook.css";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addBooksAPI } from "../Services/allAPI";
+import { bookDateResponseContext } from "../Context/ContextShare";
 
 function UploadBook() {
+  // context 
+  const {bookdateResponse,setBookdateResponse}=useContext(bookDateResponseContext)
+
+
   // this state hold to token
   const [token, setToken] = useState("");
   // to store to image in type url to create state hold
@@ -92,14 +97,15 @@ function UploadBook() {
       if (token) {
         const reqHeader = {
           "Content-Type": "multipart/form-data",
-          "Authorization":`Bearer ${token}`
+          "Authorization": `Bearer ${token}`,
         };
-      
+
         const result = await addBooksAPI(reqBody, reqHeader);
         if (result.status === 200) {
           console.log(result.data);
           handleClose();
           toast.success("book added");
+          setBookdateResponse(result.data)
         } else {
           console.log(result);
           toast.warning(result.response.data);
@@ -110,7 +116,7 @@ function UploadBook() {
   // console.log(token);
   // to verify the data get or not to console.log`
   // console.log(booksdetails);
- 
+
   return (
     <>
       <div
@@ -127,13 +133,14 @@ function UploadBook() {
           </h2>
         </div>
       </div>
+      
 
       <Modal show={show} onHide={handleClose} className="custom-modal">
         {" "}
         {/* Add custom class */}
         <Modal.Header className="bg-black " closeButton>
           <Modal.Title className="text-white text-center">
-            Modal heading
+            Add new Books
           </Modal.Title>
         </Modal.Header>
         <Modal.Body className="bg-black">
