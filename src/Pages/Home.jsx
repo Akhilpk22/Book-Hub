@@ -35,10 +35,10 @@ function Home() {
 
                   <p>
                     Immerse yourself in our vast collection of books spanning
-                    various genres and categories. From classic literature to
-                    contemporary bestsellers, we have something for everyone.
+                    various genres and categories.🌐📖 From classic literature to
+                    contemporary bestsellers, we have something for everyone.📝💕
                     Our curated recommendations and personalized reading lists
-                    will guide you towards your next literary adventure...
+                    will guide you towards your next literary adventure... 🌍💏
                   </p>
                   
                 </div>

@@ -102,26 +102,24 @@ function OnlyUserBook() {
           className="mt-4"
           style={{
             width: "100%", // Adjust the width for larger screens
-            maxWidth: "300px", // Set a maximum width for smaller screens
+            maxWidth: "340px", // Set a maximum width for smaller screens
             backgroundColor: "white",
             color: "black",
             padding: "20px", // Add padding for better spacing
             boxSizing: "border-box", // Include padding and border in the total width
           }}
         >
-          <label className="bg-white ">
-            <input style={{ display: "none" }} type="file" />
-            <img
-              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT83_4nYbepKSRjeX5LgJcF8imUzSjkC49iXg&usqp=CAU"
-              className="rounded-circle "
-              alt="Upload"
-            />
-          </label>
-          <p className="text-center fw-bolder shadow-lg mt-3">{username} </p>
-          <div className="d-flex justify-content-around  align-items-center ">
-            <p>follow up</p>
-            <p>like 1222</p>
+          <p  style={{textTransform: "uppercase" , height:"60px"}} className="text-center p-3 fw-bolder shadow-lg ">{username} </p>
+         
+          <div className="text-center mt-4">
+          <p> ❤️Our profiles tell a tale of two kindred spirits,💞📝" where Malayalam nuances meet English expressions, creating a love story written in the universal language of the heart. 💑📚"</p>
           </div>
+       
+          <div className="d-flex justify-content-around mt-4 align-items-center ">
+            <p className="fw-bolder">follow up</p>
+            <p className="fw-bolder">like 1222</p>
+          </div>
+          
         </div>
         <div style={{ flex: "1", padding: "20px" }}>
           {/* XX to add massage  */}
@@ -138,7 +136,7 @@ function OnlyUserBook() {
               {userBooks?.length > 0 ? (
                 userBooks.map((book) => (
                   <Col className="mt-3" sm={12} md={6}>
-                    <Card>
+                    <Card className="border-black border-3">
                       <Card.Img
                         onClick={() => handleCardClick(book)}
                         style={{ height: "350px" }}

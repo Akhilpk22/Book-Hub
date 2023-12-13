@@ -55,7 +55,7 @@ console.log(allBooks);
             { allBooks?.length>0?allBooks.map(book=>(
               <Col className="mt-3" sm={6} md={4} lg={3}>
               
-              <Card>
+              <Card className="border-black border-3 ">
                 <Card.Img
                   onClick={()=>handleCardClick(book)}
                   style={{ height: "350px" }}
@@ -80,7 +80,7 @@ console.log(allBooks);
             <Offcanvas.Title></Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Card>
+            <Card className="border-black border-5">
               <Card.Img
                 onClick={handleShow}
                 style={{ height: "440px" }}

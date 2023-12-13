@@ -56,8 +56,11 @@ function Auth({ register }) {
       const result = await loginAPI(userData);
       if (result.status === 200) {
         // all user details up to store  in sessionStorage in existingUser and  token  alway open in that tab
-        sessionStorage.setItem("existingUser",JSON.stringify(result.data.existingUser))
-        sessionStorage.setItem("token",result.data.token)
+        sessionStorage.setItem(
+          "existingUser",
+          JSON.stringify(result.data.existingUser)
+        );
+        sessionStorage.setItem("token", result.data.token);
         setuserData({
           email: "",
           password: "",
@@ -69,12 +72,24 @@ function Auth({ register }) {
       }
     }
   };
-// ending the login sections
+  // ending the login sections
   return (
     <>
       <div className="bg-image-in-Auth">
         <div className="container d-flex justify-content-around align-items-center">
-          <div>Book-hub</div>
+        <div className="wave">
+      <span className="letter" style={{ '--delay': '0' }}>B</span>
+      <span className="letter" style={{ '--delay': '0.1s' }}>O</span>
+      <span className="letter" style={{ '--delay': '0.2s' }}>O</span>
+      <span className="letter" style={{ '--delay': '0.3s' }}>K</span>
+      <span className="letter" style={{ '--delay': '0.4s' }}>-</span>
+      <span className="letter" style={{ '--delay': '0.5s' }}>H</span>
+      <span className="letter" style={{ '--delay': '0.6s' }}>U</span>
+      <span className="letter" style={{ '--delay': '0.7s' }}>B</span>
+      <span className="letter" style={{ '--delay': '0.8s' }}>.</span>
+      <span className="letter" style={{ '--delay': '0.9s' }}>.</span>
+      <span className="letter" style={{ '--delay': '1s' }}>.</span>
+    </div>
           <div className="card-inAuth text-light">
             <div className="w-100  d-flex justify-content-center align-items-center">
               <Form className="w-75 mt-5">

@@ -2,7 +2,7 @@
     background-image: url('https://images.unsplash.com/photo-1604361709763-44f7fc6dd075?q=80&w=1770&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
     background-size: cover;
     object-fit: cover;
-    opacity: initial;
+    
   width: 100%;
   height: 100vh;
   display: flex;
@@ -53,8 +53,8 @@
 .buttons:after {
   top: -1px;
   left: -1px;
-  border-top: 5px solid white;
-  border-left: 5px solid white;
+  border-top: 5px solid black;
+  border-left: 5px solid black;
 }
 .buttons:before {
   bottom: -1px;
@@ -79,3 +79,116 @@
   justify-content: center;
   align-items: center;
 }
+
+/* loding  */
+.wave {
+  display: flex;
+  font-weight: 900;
+  font-size: 5em; /* Adjust the font size as needed */
+}
+
+.letter {
+  display: inline-block;
+  animation: waveAnimation 1.2s infinite, colorChange 2.5s infinite;
+}
+
+.letter:nth-child(1) {
+  animation-delay: var(--delay);
+}
+
+.letter:nth-child(2) {
+  animation-delay: calc(var(--delay) + 0.1s);
+}
+
+.letter:nth-child(3) {
+  animation-delay: calc(var(--delay) + 0.2s);
+}
+
+.letter:nth-child(4) {
+  animation-delay: calc(var(--delay) + 0.3s);
+}
+
+.letter:nth-child(5) {
+  animation-delay: calc(var(--delay) + 0.4s);
+}
+
+.letter:nth-child(6) {
+  animation-delay: calc(var(--delay) + 0.5s);
+}
+
+.letter:nth-child(7) {
+  animation-delay: calc(var(--delay) + 0.6s);
+}
+
+.letter:nth-child(8) {
+  animation-delay: calc(var(--delay) + 0.7s);
+}
+
+.letter:nth-child(9) {
+  animation-delay: calc(var(--delay) + 0.8s);
+}
+
+.letter:nth-child(10) {
+  animation-delay: calc(var(--delay) + 0.9s);
+}
+
+.letter:nth-child(11) {
+  animation-delay: calc(var(--delay) + 1s);
+}
+
+@keyframes waveAnimation {
+  0%, 100% {
+    transform: translateY(0);
+    text-shadow: 20px 9px 9px rgba(239, 9, 9, 0.976);
+  }
+  50% {
+    transform: translateY(-18px);
+    text-shadow: 60px28px 28px rgba(238, 5, 5, 0.976);
+  }
+}
+
+@keyframes colorChange {
+  0% {
+    color: rgba(39, 8, 238, 0.95); /* Change to your desired start color */
+  }
+  25% {
+    color: white; /* Change to your desired color */
+  }
+  50% {
+    color: rgb(243, 247, 247); /* Change to your desired color */
+  }
+  75% {
+    color: rgb(239, 239, 239); /* Change to your desired color */
+  }
+  100% {
+    color: rgb(243, 243, 243); /* Change to your desired end color */
+  }
+}
+
+
+/* Your regular styles here */
+
+@media only screen and (max-width: 600px) {
+  /* Adjust styles for screens smaller than 600px */
+  .wave {
+    font-size: 1.5em;
+  }
+
+  .letter {
+    /* Adjust other styles as needed */
+  }
+}
+
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+  /* Adjust styles for screens between 601px and 1200px */
+  .wave {
+    font-size: 2em;
+  }
+
+  .letter {
+    /* Adjust other styles as needed */
+  }
+}
+
+/* Add more media queries for different screen sizes if necessary */
+
