@@ -30,7 +30,7 @@ function App() {
         <Route path='/bookview' element={isAuthorized?<BookView/>:<Auth/>}/>
         <Route path='/freebooks' element={isAuthorized?<FreeBooks/>:<Auth/>}/>
         <Route path='/userbook'element={isAuthorized?<OnlyUserBook/>:<Auth/>}/>
-        <Route path='/*' element={<Navigate to={'/'}/>}/>
+        <Route path='/*' element={<Navigate to={'/register'}/>}/>
       </Routes>
       <Footer/>
 

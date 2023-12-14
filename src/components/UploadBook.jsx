@@ -130,7 +130,7 @@ function UploadBook() {
             onClick={handleShow}
             className="buttons animate__animated animate__bounceInDown "
           >
-            Sell Your Book
+            Add Your Book
           </h2>
         </div>
       </div>

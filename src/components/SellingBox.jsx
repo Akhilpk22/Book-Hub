@@ -99,7 +99,7 @@ function SellingBox() {
               style={{ cursor: "pointer" }}
               className="ms-3 sellingboxhover "
             >
-              Manage Book
+              ALL Book
             </h4>
           </div>
           <div className="d-flex mt-3">
