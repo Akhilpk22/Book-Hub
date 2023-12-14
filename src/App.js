@@ -3,7 +3,7 @@ import './App.css';
 import Home from './Pages/Home';
 import Footer from './Pages/Footer';
 import SellingBox from './components/SellingBox';
-import { Route, Routes } from 'react-router-dom';
+import { Navigate, Route, Routes } from 'react-router-dom';
 import BookView from './components/BookView';
 
 import FreeBooks from './components/FreeBooks';
@@ -30,6 +30,7 @@ function App() {
         <Route path='/bookview' element={isAuthorized?<BookView/>:<Auth/>}/>
         <Route path='/freebooks' element={isAuthorized?<FreeBooks/>:<Auth/>}/>
         <Route path='/userbook'element={isAuthorized?<OnlyUserBook/>:<Auth/>}/>
+        <Route path='/*' element={<Navigate to={'/'}/>}/>
       </Routes>
       <Footer/>
 
