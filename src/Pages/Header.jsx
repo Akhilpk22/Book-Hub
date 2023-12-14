@@ -5,6 +5,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
 import './Header.css';
 import { Link } from 'react-router-dom';
+import 'animate.css';
 
 
 function Header() {
@@ -13,7 +14,7 @@ function Header() {
     <div style={{backgroundColor:"#ffffcc"}} >
         <Navbar expand="lg" className="" >
       <Container>
-        <Navbar.Brand >
+        <Navbar.Brand className='animate__animated animate__slideInLeft' >
           {/* css animation somke */}
           <ul>
               <li>B</li>

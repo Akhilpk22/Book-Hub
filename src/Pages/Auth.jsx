@@ -1,12 +1,19 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import "./Auth.css";
 import { Form } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import { loginAPI, registerAPI } from "../Services/allAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { tokenVerifyContext } from "../Context/TokenVerify";
+import 'animate.css';
 
 function Auth({ register }) {
+
+  // context use
+  const {isAuthorized,setisAuthorized} =useContext(tokenVerifyContext)
+
+
   // usenavigate
   const navigate = useNavigate();
 
@@ -56,11 +63,10 @@ function Auth({ register }) {
       const result = await loginAPI(userData);
       if (result.status === 200) {
         // all user details up to store  in sessionStorage in existingUser and  token  alway open in that tab
-        sessionStorage.setItem(
-          "existingUser",
-          JSON.stringify(result.data.existingUser)
-        );
+        sessionStorage.setItem("existingUser",JSON.stringify(result.data.existingUser));
         sessionStorage.setItem("token", result.data.token);
+        // context
+        setisAuthorized(true)
         setuserData({
           email: "",
           password: "",
@@ -77,7 +83,7 @@ function Auth({ register }) {
     <>
       <div className="bg-image-in-Auth">
         <div className="container d-flex justify-content-around align-items-center">
-        <div className="wave">
+    <div className="wave ">
       <span className="letter" style={{ '--delay': '0' }}>B</span>
       <span className="letter" style={{ '--delay': '0.1s' }}>O</span>
       <span className="letter" style={{ '--delay': '0.2s' }}>O</span>
@@ -92,7 +98,7 @@ function Auth({ register }) {
     </div>
           <div className="card-inAuth text-light">
             <div className="w-100  d-flex justify-content-center align-items-center">
-              <Form className="w-75 mt-5">
+              <Form className="w-75 mt-5 animate__animated animate__slideInUp">
                 {isRegisterForm && (
                   <Form.Group className="mb-3 " controlId="formBasicName">
                     <Form.Control
@@ -154,7 +160,7 @@ function Auth({ register }) {
                 </div>
               </Form>
             </div>
-            <h5 className="fw-bolder  text-center  text-light">
+            <h5 className="fw-bolder  text-center animate__animated animate__slideInRight  text-light">
               {isRegisterForm ? (
                 <p className="mb-3">
                   already have an Account <Link to={"/"}>Login</Link>

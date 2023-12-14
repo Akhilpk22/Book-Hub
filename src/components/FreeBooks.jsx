@@ -13,7 +13,7 @@ function FreeBooks() {
     <div className="mt-5">
       <div className="mb-5 d-flex justify-content-center align-items-center">
         <button className="border border-0" onClick={handleTap}>
-          <h2>Get to Free Books</h2>
+          <h2 className="fw-bolder textshow">Get to Free Books</h2>
         </button>
       </div>
 

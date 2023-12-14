@@ -10,3 +10,16 @@
     color: #fa0c0c; /* Text color on hover */
     background-color: #454a4f; /* Background color on hover */
   }
+  .textshow{
+    background: linear-gradient(to right ,#23e4e4 0%,#330867 100%);
+    background-clip: text;
+    color: transparent;
+  }
+  /* rating-box */
+  input[type=radio]{
+    display: none;
+  }
+  .star{
+    cursor: pointer;
+    
+  }

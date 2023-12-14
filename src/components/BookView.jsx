@@ -9,8 +9,15 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 import { useState } from "react";
 import { homeBookAPI } from "../Services/allAPI";
 import { BASE_URL } from "../Services/baseurl";
+import 'animate.css';
+import { FaStar } from 'react-icons/fa';
+
 
 function BookView() {
+
+
+
+
   
   const [show, setShow] = useState(false);
 
@@ -47,13 +54,13 @@ console.log(allBooks);
   return (
     <>
       <div>
-        <div className="d-flex justify-content-center align-items-center mt-5">
-          <h2>All Books </h2>
+        <div className="d-flex justify-content-center align-items-center ">
+          <h2 className="fw-bolder textshow">All Books </h2>
         </div>
         <Container>
           <Row className="mt-5">
             { allBooks?.length>0?allBooks.map(book=>(
-              <Col className="mt-3" sm={6} md={4} lg={3}>
+              <Col className="mt-2" sm={6} md={4} lg={3}>
               
               <Card className="border-black border-3 ">
                 <Card.Img
@@ -63,13 +70,20 @@ console.log(allBooks);
                   variant="top"
                   src={book?`${BASE_URL}/uploads/${book?.bookImage}`:"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"}
                 />
-                 <p className="text-center fw-bolder ">{book.bookTitle}</p>
+                 <p className="text-center fs-6  mt-2 fw-bolder ">{book.bookTitle}</p>
+                 
+      
               </Card>
+             
+              
             </Col>
+            
             )):null
               }
           </Row>
+          
         </Container>
+        
         <Offcanvas
           style={{ width: "600px" }}
           show={show}
@@ -80,7 +94,7 @@ console.log(allBooks);
             <Offcanvas.Title></Offcanvas.Title>
           </Offcanvas.Header>
           <Offcanvas.Body>
-            <Card className="border-black border-5">
+            <Card className="border-black border-5 animate__animated animate__bounceInRight">
               <Card.Img
                 onClick={handleShow}
                 style={{ height: "440px" }}
@@ -88,6 +102,31 @@ console.log(allBooks);
                 variant="top"
                 src={selectedBook?`${BASE_URL}/uploads/${selectedBook?.bookImage}`:"https://encrypted-tbn0.com/images?q=tbn:ANd9GcQw-b858lqevPWoaf10kfmN0mOaV1K0y-1gOEwaarhfbUOlIQueevGlKzQaQg&s"}
               />
+              {/* <div className="mb-3 d-flex justify-content-center align-items-center">
+                      {[...Array(5)].map((star, index) => {
+                        const currentRating = index + 1;
+                        return(
+                          <label >
+                            <input type="radio"
+                            name="rating"
+                            value={currentRating}
+                            onClick={()=> setRating(currentRating)}
+                             />
+                            <FaStar 
+                            className="star" 
+                              
+                            size={20} 
+                            color={currentRating <= (hover || rating)?"#ffc107":"#e4e5e9"}
+                            onMouseEnter={()=>setHover(currentRating)}
+                            onMouseLeave={()=>setHover (null)}
+
+                            />
+
+                          </label>
+                        );
+                      })}
+                  </div> */}
+             
              
             </Card>
             <h4  className="mt-4 text-info">Book Title: <span className="text-success " >{selectedBook?.bookTitle}</span ></h4>

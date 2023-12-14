@@ -149,7 +149,7 @@
 
 @keyframes colorChange {
   0% {
-    color: rgba(39, 8, 238, 0.95); /* Change to your desired start color */
+    color: rgba(2, 1, 13, 0.95); /* Change to your desired start color */
   }
   25% {
     color: white; /* Change to your desired color */

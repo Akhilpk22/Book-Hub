@@ -3,6 +3,8 @@ import { Col, Container, Row } from "react-bootstrap";
 import Header from "./Header";
 import BookView from "../components/BookView";
 import FreeBooks from "../components/FreeBooks";
+import 'animate.css';
+
 
 
 
@@ -28,8 +30,8 @@ function Home() {
                   style={{ border: "1px solid #ccc", padding: "20px" }}
                   className="text-center"
                 >
-                  <h2 style={{ fontSize: "2.5rem" }}>Buy and sell your Book</h2>
-                  <h2 style={{ fontSize: "2rem", color: "blue" }}>
+                  <h2 className="fw-bolder" style={{ fontSize: "2.5rem" }}>Buy and sell your Book</h2>
+                  <h2 className="textshow fw-bolder" style={{ fontSize: "2rem", }}>
                     for the best price
                   </h2>
 
@@ -45,7 +47,7 @@ function Home() {
               </div>
             </Col>
 
-            <Col xs={12} md={6} l={3}>
+            <Col className="animate__animated animate__slideInRight" xs={12} md={6} l={3}>
               {/* Right Side */}
               <div  className="text-center mt-5">
                 <img

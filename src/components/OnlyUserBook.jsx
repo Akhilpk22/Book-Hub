@@ -12,6 +12,7 @@ import {
 } from "../Context/ContextShare";
 import { Alert } from "react-bootstrap";
 import EditBooks from "./EditBooks";
+import 'animate.css';
 
 function OnlyUserBook() {
   // another  one context call
@@ -81,6 +82,7 @@ function OnlyUserBook() {
     if(result.status===200){
       // page reload mongo bd call 
       getUserBooks();
+      alert("Deleting this item will remove it permanently. Do you wish to proceed ")
     }else{
       toast.error(result.response.data)
     }
@@ -95,7 +97,7 @@ function OnlyUserBook() {
   return (
     <>
       <div className="d-flex justify-content-center align-items-center ">
-        <h2> user Books </h2>
+        <h2 className="fw-bolder textshow"> User Books </h2>
       </div>
       <div style={{ display: "flex", flexWrap: "wrap" }}>
         <div
@@ -111,7 +113,7 @@ function OnlyUserBook() {
         >
           <p  style={{textTransform: "uppercase" , height:"60px"}} className="text-center p-3 fw-bolder shadow-lg ">{username} </p>
          
-          <div className="text-center mt-4">
+          <div className="text-center mt-4 animate__animated  animate__bounceInUp">
           <p> ❤️Our profiles tell a tale of two kindred spirits,💞📝" where Malayalam nuances meet English expressions, creating a love story written in the universal language of the heart. 💑📚"</p>
           </div>
        
@@ -158,7 +160,7 @@ function OnlyUserBook() {
                   </Col>
                 ))
               ) : (
-                <h1 className=" ms-5 fw-bolder text-danger">
+                <h1 className=" ms-5 fw-bolder text-danger animate__animated animate__bounceInUp">
                   No projects add.....
                 </h1>
               )}
@@ -171,11 +173,11 @@ function OnlyUserBook() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title>
+              <Offcanvas.Title >
                 <span className="text-black">Welcome</span>{" "}
                 <span
                   style={{ fontSize: "25px", textTransform: "uppercase" }}
-                  className="text-success fw-bolder "
+                  className="text-success fw-bolder   "
                 >
                   {username}
                 </span>
@@ -292,7 +294,7 @@ function OnlyUserBook() {
             </Modal> */}
 
             <Offcanvas.Body>
-              <Card>
+              <Card className="animate__animated  animate__bounceInRight">
                 <Card.Img
                   onClick={handleShow}
                   style={{ height: "390px" }}

@@ -1,15 +1,40 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import UploadBook from "./UploadBook";
 import BookView from "./BookView";
 import './SellingBook.css'
 import OnlyUserBook from "./OnlyUserBook";
+import { useNavigate } from "react-router-dom";
+import { tokenVerifyContext } from "../Context/TokenVerify";
+import 'animate.css';
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function SellingBox() {
+
+  // context use
+  const {isAuthorized,setisAuthorized} =useContext(tokenVerifyContext)
+
+
   const [activeComponent, setActiveComponent] = useState("manageBook");
 
   const handleComponentChange = (component) => {
     setActiveComponent(component);
   };
+
+  const navigate= useNavigate()
+
+  // log out
+  const handlelogout=()=>{
+    // remove exisiting user details form the browser 
+    sessionStorage.removeItem("existingUser")
+    sessionStorage.removeItem("token")
+    // context
+    setisAuthorized(false)
+    alert("Do you really want to log out of your account?");
+    // navigate to landintg  pages 
+    navigate('/')
+
+  }
 
   return (
     <>
@@ -27,7 +52,7 @@ function SellingBox() {
         >
           {/* Sidebar content goes here */}
           <div className="d-flex justify-content-center align-content-center">
-            <h4 className="m-1 text-center">Welcome the Book City</h4>
+            <h4 className="m-1 text-center animate__animated animate__slideInLeft textshow">Welcome the Book City</h4>
           </div>
           <div className="d-flex mt-5">
             <p className="fw-bolder ">
@@ -101,11 +126,11 @@ function SellingBox() {
               Help
             </h4>
           </div>
-          <div className="d-flex mt-3">
-            <p className="fw-bolder ">
-            <i class="fa-regular fa-right-from-bracket"></i>
-            </p>
-            <h4 style={{ cursor: "pointer" }} className="ms-4 sellingboxhover">
+          <div className="d-flex mt-3b  ">
+            
+            <p className="mt-2 "><i class="fa-regular fa-right-from-bracket"></i></p>
+            
+            <h4 style={{ cursor: "pointer",fontSize:"20px" }} onClick={handlelogout} className=" btn    text-danger ms-3 sellingboxhover">
               Log Out
             </h4>
           </div>
@@ -118,6 +143,8 @@ function SellingBox() {
           {activeComponent === "manageBook" && <BookView />}
         </div>
       </div>
+      <ToastContainer position="top-center" autoClose={2000} theme="colored" />
+
     </>
   );
 }

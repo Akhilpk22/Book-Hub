@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { addBooksAPI } from "../Services/allAPI";
 import { bookDateResponseContext } from "../Context/ContextShare";
+import 'animate.css';
 
 function UploadBook() {
   // context 
@@ -127,7 +128,7 @@ function UploadBook() {
           <h2
             style={{ fontSize: "40px", fontWeight: "bolder" }}
             onClick={handleShow}
-            className="buttons"
+            className="buttons animate__animated animate__bounceInDown "
           >
             Sell Your Book
           </h2>
@@ -139,7 +140,7 @@ function UploadBook() {
         {" "}
         {/* Add custom class */}
         <Modal.Header className="bg-black " closeButton>
-          <Modal.Title className="text-white text-center">
+          <Modal.Title className="text-white text-center textshow">
             Add new Books
           </Modal.Title>
         </Modal.Header>
