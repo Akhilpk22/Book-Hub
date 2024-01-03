@@ -15,10 +15,6 @@ import { FaStar } from 'react-icons/fa';
 
 function BookView() {
 
-
-
-
-  
   const [show, setShow] = useState(false);
 
   const handleClose = () => setShow(false);

@@ -36,3 +36,7 @@ export const editbookAPI  = async(bookId ,reqBody,reqHeader)=>{
 export const deleteAPI = async(bookId,reqHeader)=>{
     return await commonAPI("DELETE",`${BASE_URL}/books/remove/${bookId}`,{},reqHeader)
 }
+// update user information 
+export const edituserAPI = async(reqBody,reqHeader)=>{
+    return await commonAPI("PUT",`${BASE_URL}/user/edit`,reqBody,reqHeader)
+}

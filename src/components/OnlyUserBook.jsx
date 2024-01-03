@@ -2,7 +2,7 @@ import React, { useContext, useEffect } from "react";
 import { useState } from "react";
 import { Card, Col, Container, Offcanvas, Row } from "react-bootstrap";
 import Fade from "react-bootstrap/Fade";
-import { deleteAPI, userBookAPI } from "../Services/allAPI";
+import { deleteAPI, edituserAPI, userBookAPI } from "../Services/allAPI";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { BASE_URL } from "../Services/baseurl";
@@ -12,7 +12,9 @@ import {
 } from "../Context/ContextShare";
 import { Alert } from "react-bootstrap";
 import EditBooks from "./EditBooks";
-import 'animate.css';
+import Button from "react-bootstrap/Button";
+import Collapse from "react-bootstrap/Collapse";
+import "animate.css";
 
 function OnlyUserBook() {
   // another  one context call
@@ -76,23 +78,137 @@ function OnlyUserBook() {
     const token = sessionStorage.getItem("token");
     const reqHeader = {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${token}`,
-    }
-    const result= await deleteAPI(id,reqHeader)
-    if(result.status===200){
-      // page reload mongo bd call 
+      Authorization: `Bearer ${token}`,
+    };
+    const result = await deleteAPI(id, reqHeader);
+    if (result.status === 200) {
+      // page reload mongo bd call
       getUserBooks();
-      alert("Deleting this item will remove it permanently. Do you wish to proceed ")
-    }else{
-      toast.error(result.response.data)
+      alert(
+        "Deleting this item will remove it permanently. Do you wish to proceed "
+      );
+    } else {
+      toast.error(result.response.data);
     }
   };
 
+
+
+  // update code
+
+  const [userprofile, setUserProfile] = useState({
+    username: "",
+    email: "",
+    password: "",
+    profile: "",
+  });
+  const [existingImage, setExistingImage] = useState("");
+  const [preview, setPreview] = useState("");
+
+
+  useEffect(() => {
+    const user = JSON.parse(sessionStorage.getItem("existingUser"));
+    setUserProfile({
+      ...userprofile,
+      username: user.username,
+      email: user.email,
+      password: user.password,
+      profile: ""});
+    setExistingImage(user.profile);
+    
+  }, []);
+
+  useEffect(() => {
+    if (userprofile.profile) {
+      setPreview(URL.createObjectURL(userprofile.profile));
+    } else {
+      setPreview("");
+    }
+  }, [userprofile.profile]);
+
+const handeprofileUpdate= async()=>{
+  const {username,email,password,profile}= userprofile
+  if(!username){
+    toast.info("please upload the your photo")
+  }else{
+    const reqBody= new FormData()
+    reqBody.append("username",username)
+    reqBody.append("email",email)
+    reqBody.append("password",password)
+    preview? reqBody.append("profileImage", profile):reqBody.append("profileImage", existingImage);
+    const  token = sessionStorage.getItem("token")
+    if(preview){
+      const reqHeader = {
+        "Content-Type": "multipart/form-data",
+        "Authorization": `Bearer ${token}`,
+      }
+      // api call
+      const res = await edituserAPI(reqBody, reqHeader);
+      if(res.status===200){
+        setOpen(!open)
+        sessionStorage.setItem("existingUser",JSON.stringify(res.data))
+      }else{
+        setOpen(!open)
+        console.log(res);
+        console.log(res.response.data);
+      }
+    }else{
+      const reqHeader = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      }
+      // api
+      const res = await edituserAPI(reqBody, reqHeader);
+      if(res.status===200){
+        setOpen(!open)
+        sessionStorage.setItem("existingUser",JSON.stringify(res.data))
+      }else{
+        setOpen(!open)
+        console.log(res);
+        console.log(res.response.data);
+      }
+    }
+  
+  }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// update end 
   useEffect(() => {
     getUserBooks();
     // use context state
   }, [bookdateResponse, editBookResponse]);
   console.log(userBooks);
+
+
+
+
+
+
+
+
+
 
   return (
     <>
@@ -111,18 +227,80 @@ function OnlyUserBook() {
             boxSizing: "border-box", // Include padding and border in the total width
           }}
         >
-          <p  style={{textTransform: "uppercase" , height:"60px"}} className="text-center p-3 fw-bolder shadow-lg ">{username} </p>
-         
+          <p
+            style={{ textTransform: "uppercase", height: "60px" }}
+            className="text-center p-3 fw-bolder shadow-lg "
+          >
+            {username}{" "}
+          </p>
+
           <div className="text-center mt-4 animate__animated  animate__bounceInUp">
-          <p> ❤️Our profiles tell a tale of two kindred spirits,💞📝" where Malayalam nuances meet English expressions, creating a love story written in the universal language of the heart. 💑📚"</p>
+            <p>
+              {" "}
+              ❤️Our profiles tell a tale of two kindred spirits,💞📝" where
+              Malayalam nuances meet English expressions, creating a love story
+              written in the universal language of the heart. 💑📚"
+            </p>
           </div>
-       
+
           <div className="d-flex justify-content-around mt-4 align-items-center ">
-            <p className="fw-bolder">follow up</p>
-            <p className="fw-bolder">like 1222</p>
+            <h4>Update MyProfile</h4>
+            <Button
+              className="btn btn-outline-dark"
+              onClick={() => setOpen(!open)}
+              aria-controls="example-collapse-text"
+              aria-expanded={open}
+            >
+              <i class="fa-solid fa-arrow-down-long"></i>
+            </Button>
           </div>
-          
+          <Collapse className="bg-black p-3 rounded-3  mt-2" in={open}>
+            <div id="example-collapse-text">
+              <div className="row justify-content-center mt-3">
+              <label className="text-center">
+              <input
+                style={{ display: "none" }}
+                onChange={(e) =>
+                  setUserProfile({ ...userprofile, profile: e.target.files[0] })
+                }
+                type="file"
+              />
+
+              {existingImage !== "" ? (
+                <img
+                  height={"200px"}
+                  width={"200px"}
+                  className="rounded-circle border"
+                  alt="Uploading picture"
+                  src={preview ? preview : `${BASE_URL}/uploads/${existingImage}`}
+                />
+              ) : (
+                <img
+                  height={"200px"}
+                  width={"200px"}
+                  className="rounded-circle border"
+                  alt="Uploading picture"
+                  src={
+                    preview
+                      ? preview
+                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmuG-1sL9aUGxNGXIL0xLZQ39gV3gCnw7iUg&usqp=CAU"
+                  }
+                />
+              )}
+            </label>
+                <div className="mt-5 mb-3 text-center ">
+                  <input  className="form-control " type="text" placeholder="enter the new password"value={userprofile.username}
+                  onChange={e=>setUserProfile({...userprofile,username:e.target.value})} />
+
+                </div>
+                <div className="mt-3 btn">
+                  <Button onClick={handeprofileUpdate} className="btn ">Update</Button>
+                </div>
+              </div>
+            </div>
+          </Collapse>
         </div>
+
         <div style={{ flex: "1", padding: "20px" }}>
           {/* XX to add massage  */}
           {bookdateResponse.bookTitle ? (
@@ -173,7 +351,7 @@ function OnlyUserBook() {
             placement="end"
           >
             <Offcanvas.Header closeButton>
-              <Offcanvas.Title >
+              <Offcanvas.Title>
                 <span className="text-black">Welcome</span>{" "}
                 <span
                   style={{ fontSize: "25px", textTransform: "uppercase" }}
