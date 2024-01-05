@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { useState } from "react";
-import { Card, Col, Container, Offcanvas, Row } from "react-bootstrap";
+import { Card, Col, Container, Modal, Offcanvas, Row } from "react-bootstrap";
 import Fade from "react-bootstrap/Fade";
 import { deleteAPI, edituserAPI, userBookAPI } from "../Services/allAPI";
 import { ToastContainer, toast } from "react-toastify";
@@ -15,6 +15,7 @@ import EditBooks from "./EditBooks";
 import Button from "react-bootstrap/Button";
 import Collapse from "react-bootstrap/Collapse";
 import "animate.css";
+
 
 function OnlyUserBook() {
   // another  one context call
@@ -92,8 +93,6 @@ function OnlyUserBook() {
     }
   };
 
-
-
   // update code
 
   const [userprofile, setUserProfile] = useState({
@@ -105,7 +104,6 @@ function OnlyUserBook() {
   const [existingImage, setExistingImage] = useState("");
   const [preview, setPreview] = useState("");
 
-
   useEffect(() => {
     const user = JSON.parse(sessionStorage.getItem("existingUser"));
     setUserProfile({
@@ -113,9 +111,9 @@ function OnlyUserBook() {
       username: user.username,
       email: user.email,
       password: user.password,
-      profile: ""});
+      profile: "",
+    });
     setExistingImage(user.profile);
-    
   }, []);
 
   useEffect(() => {
@@ -126,89 +124,61 @@ function OnlyUserBook() {
     }
   }, [userprofile.profile]);
 
-const handeprofileUpdate= async()=>{
-  const {username,email,password,profile}= userprofile
-  if(!username){
-    toast.info("please upload the your photo")
-  }else{
-    const reqBody= new FormData()
-    reqBody.append("username",username)
-    reqBody.append("email",email)
-    reqBody.append("password",password)
-    preview? reqBody.append("profileImage", profile):reqBody.append("profileImage", existingImage);
-    const  token = sessionStorage.getItem("token")
-    if(preview){
-      const reqHeader = {
-        "Content-Type": "multipart/form-data",
-        "Authorization": `Bearer ${token}`,
-      }
-      // api call
-      const res = await edituserAPI(reqBody, reqHeader);
-      if(res.status===200){
-        setOpen(!open)
-        sessionStorage.setItem("existingUser",JSON.stringify(res.data))
-      }else{
-        setOpen(!open)
-        console.log(res);
-        console.log(res.response.data);
-      }
-    }else{
-      const reqHeader = {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${token}`,
-      }
-      // api
-      const res = await edituserAPI(reqBody, reqHeader);
-      if(res.status===200){
-        setOpen(!open)
-        sessionStorage.setItem("existingUser",JSON.stringify(res.data))
-      }else{
-        setOpen(!open)
-        console.log(res);
-        console.log(res.response.data);
+  const handeprofileUpdate = async () => {
+    const { username, email, password, profile } = userprofile;
+    if (!username) {
+      toast.info("please upload the your photo");
+    } else {
+      const reqBody = new FormData();
+      reqBody.append("username", username);
+      reqBody.append("email", email);
+      reqBody.append("password", password);
+      preview
+        ? reqBody.append("profileImage", profile)
+        : reqBody.append("profileImage", existingImage);
+      const token = sessionStorage.getItem("token");
+      if (preview) {
+        const reqHeader = {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        };
+        // api call
+        const res = await edituserAPI(reqBody, reqHeader);
+        if (res.status === 200) {
+          setOpen(!open);
+          sessionStorage.setItem("existingUser", JSON.stringify(res.data));
+        } else {
+          setOpen(!open);
+          console.log(res);
+          console.log(res.response.data);
+        }
+      } else {
+        const reqHeader = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        };
+        // api
+        const res = await edituserAPI(reqBody, reqHeader);
+        if (res.status === 200) {
+          setOpen(!open);
+          sessionStorage.setItem("existingUser", JSON.stringify(res.data));
+        } else {
+          setOpen(!open);
+          console.log(res);
+          console.log(res.response.data);
+        }
       }
     }
+  };
+
   
-  }
-}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// update end 
+  // update end
   useEffect(() => {
     getUserBooks();
     // use context state
   }, [bookdateResponse, editBookResponse]);
   console.log(userBooks);
-
-
-
-
-
-
-
-
-
 
   return (
     <>
@@ -257,44 +227,62 @@ const handeprofileUpdate= async()=>{
           <Collapse className="bg-black p-3 rounded-3  mt-2" in={open}>
             <div id="example-collapse-text">
               <div className="row justify-content-center mt-3">
-              <label className="text-center">
-              <input
-                style={{ display: "none" }}
-                onChange={(e) =>
-                  setUserProfile({ ...userprofile, profile: e.target.files[0] })
-                }
-                type="file"
-              />
+                <label className="text-center">
+                  <input
+                    style={{ display: "none" }}
+                    onChange={(e) =>
+                      setUserProfile({
+                        ...userprofile,
+                        profile: e.target.files[0],
+                      })
+                    }
+                    type="file"
+                  />
 
-              {existingImage !== "" ? (
-                <img
-                  height={"200px"}
-                  width={"200px"}
-                  className="rounded-circle border"
-                  alt="Uploading picture"
-                  src={preview ? preview : `${BASE_URL}/uploads/${existingImage}`}
-                />
-              ) : (
-                <img
-                  height={"200px"}
-                  width={"200px"}
-                  className="rounded-circle border"
-                  alt="Uploading picture"
-                  src={
-                    preview
-                      ? preview
-                      : "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQmuG-1sL9aUGxNGXIL0xLZQ39gV3gCnw7iUg&usqp=CAU"
-                  }
-                />
-              )}
-            </label>
+                  {existingImage !== "" ? (
+                    <img
+                      height={"200px"}
+                      width={"200px"}
+                      className="rounded-circle border"
+                      alt="Uploading picture"
+                      src={
+                        preview
+                          ? preview
+                          : `${BASE_URL}/uploads/${existingImage}`
+                      }
+                    />
+                  ) : (
+                    <img
+                      height={"200px"}
+                      width={"200px"}
+                      className="rounded-circle border"
+                      alt="Uploading picture"
+                      src={
+                        preview
+                          ? preview
+                          : "https://images.unsplash.com/photo-1478641300939-0ec5188d3802?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjB8fG9sZCUyMHdyaXRpbmd8ZW58MHx8MHx8fDA%3D"
+                      }
+                    />
+                  )}
+                </label>
                 <div className="mt-5 mb-3 text-center ">
-                  <input  className="form-control " type="text" placeholder="enter the new password"value={userprofile.username}
-                  onChange={e=>setUserProfile({...userprofile,username:e.target.value})} />
-
+                  <input
+                    className="form-control "
+                    type="text"
+                    placeholder="enter the new password"
+                    value={userprofile.username}
+                    onChange={(e) =>
+                      setUserProfile({
+                        ...userprofile,
+                        username: e.target.value,
+                      })
+                    }
+                  />
                 </div>
                 <div className="mt-3 btn">
-                  <Button onClick={handeprofileUpdate} className="btn ">Update</Button>
+                  <Button onClick={handeprofileUpdate} className="btn ">
+                    Update
+                  </Button>
                 </div>
               </div>
             </div>
@@ -524,6 +512,8 @@ const handeprofileUpdate= async()=>{
                   </p>
                 </a>
               </h4>
+              
+              
             </Offcanvas.Body>
           </Offcanvas>
         </div>
